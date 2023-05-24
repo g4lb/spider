@@ -90,3 +90,19 @@ If you want to enable persistence for the crawling requests and their results, f
    ```
 
    The application will now persist the crawling requests and their results in the configured MongoDB database.
+
+## Design concept
+
+1. Architecture Overview:
+
+   - The spider solution follows a microservices architecture, separating concerns into modules to promote modularity and maintainability.
+   - The main components include:
+      - Crawler Module: Responsible for handling crawling requests, executing the crawling algorithm, and persisting the crawled data.
+      - Database Module: Handles database interactions for storing and retrieving crawled data.
+      - API Module: Provides the RESTful API endpoints for receiving crawling requests and returning crawled data.
+      - Queue Module: Manages a message queue system to handle asynchronous processing and distribute crawling tasks across multiple instances.
+
+2. Crawler Module:
+
+   - Contains the core logic for crawling web pages using the BFS algorithm.
+   - Includes the CrawlerService that encapsulates the crawling functionality, such as extracting links, managing visited URLs, and storing crawled data.
