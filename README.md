@@ -1,74 +1,92 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Spider Solution (Crawler) in NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is a spider solution (crawler) built using NestJS, which receives crawling requests and extracts links from web pages based on a specified starting URL. The solution implements a Breadth-First Search (BFS) crawling strategy with support for scalability, persistence, and handling a high number of requests and heavy crawling.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- Crawls web pages using the BFS algorithm.
+- Receives crawling requests with a starting URL, maximum number of links to return, and crawl depth.
+- Supports parallel processing to handle a high number of requests efficiently.
+- Persists crawling requests and their results.
+- Optimized for heavy requests with pages containing many links and deep crawling.
+- Scalable architecture for distributed deployment.
+- RESTful API endpoints for submitting crawling requests and retrieving crawled data.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Requirements
+
+- Node.js (version X.X.X)
+- npm (version X.X.X)
+- MongoDB (optional, if using persistence)
 
 ## Installation
 
-```bash
-$ npm install
-```
+1. Clone the repository:
 
-## Running the app
+   ```bash
+   git clone https://github.com/g4lb/spider-solution.git
+   ```
 
-```bash
-# development
-$ npm run start
+2. Navigate to the project directory:
 
-# watch mode
-$ npm run start:dev
+   ```bash
+   cd spider-solution
+   ```
 
-# production mode
-$ npm run start:prod
-```
+3. Install the dependencies:
 
-## Test
+   ```bash
+   npm install
+   ```
 
-```bash
-# unit tests
-$ npm run test
+4. Set up the configuration:
 
-# e2e tests
-$ npm run test:e2e
+   - Copy the `.env.example` file and rename it to `.env`.
+   - Modify the configuration parameters in the `.env` file as per your environment.
 
-# test coverage
-$ npm run test:cov
-```
+5. Start the application:
 
-## Support
+   ```bash
+   npm run start
+   ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+   The application will start running on `http://localhost:3001`.
 
-## Stay in touch
+## Usage
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+1. Send a POST request to `http://localhost:3001/crawler` with the following JSON payload:
 
-## License
+   ```json
+   {
+     "startUrl": "https://example.com",
+     "maxLinks": 10,
+     "crawlDepth": 3
+   }
+   ```
 
-Nest is [MIT licensed](LICENSE).
-# spider-solution
+   - `startUrl`: The starting URL for crawling.
+   - `maxLinks`: The maximum number of links to return.
+   - `crawlDepth`: The depth to which the crawler should enter (nested links).
+
+2. The application will initiate the crawling process and return the crawled links as a JSON response.
+
+## Persistence (Optional)
+
+If you want to enable persistence for the crawling requests and their results, follow these additional steps:
+
+1. Install MongoDB and ensure it is running on your system.
+
+2. Update the `.env` file with your MongoDB connection details:
+
+   ```dotenv
+   MONGODB_URI=mongodb://localhost:27017/spider_solution
+   ```
+
+   Modify the `MONGODB_URI` value to match your MongoDB connection string.
+
+3. Start the application:
+
+   ```bash
+   npm run start
+   ```
+
+   The application will now persist the crawling requests and their results in the configured MongoDB database.
