@@ -14,8 +14,8 @@ This is a spider solution (crawler) built using NestJS, which receives crawling 
 
 ## Requirements
 
-- Node.js (version X.X.X)
-- npm (version X.X.X)
+- Node.js 
+- npm
 - MongoDB (optional, if using persistence)
 
 ## Installation
