@@ -91,7 +91,7 @@ If you want to enable persistence for the crawling requests and their results, f
 
    The application will now persist the crawling requests and their results in the configured MongoDB database.
 
-## Design concept
+## Design Concept
 
 1. Architecture Overview:
 
@@ -106,3 +106,37 @@ If you want to enable persistence for the crawling requests and their results, f
 
    - Contains the core logic for crawling web pages using the BFS algorithm.
    - Includes the CrawlerService that encapsulates the crawling functionality, such as extracting links, managing visited URLs, and storing crawled data.
+   - Utilizes libraries like Axios for making HTTP requests and Cheerio for parsing HTML content and extracting links.
+   - Implements parallel processing techniques to handle a high number of requests concurrently, improving performance and scalability.
+   - Integrates with the Database Module to persist crawled data.
+
+3. Database Module:
+   - Manages the interaction with the database for storing and retrieving crawled data.
+   - Utilizes an ORM (Object-Relational Mapping) library like Mongoose or TypeORM to interact with the database.
+   - Defines a schema and model for the CrawledData entity, specifying the structure of the crawled data to be stored.
+   - Handles database operations, such as saving crawled data, querying for specific data, and managing database connections and transactions.
+
+4. API Module:
+   - Exposes the RESTful API endpoints to receive crawling requests and return crawled data.
+   - Utilizes the NestJS framework's decorators and controllers to define the API routes.
+   - Validates and sanitizes the incoming requests, ensuring the required parameters are provided and within acceptable limits.
+   - Uses the Crawler Service to initiate the crawling process and return the crawled data as a response.
+
+5. Queue Module (optional):
+   - Implements a message queue system (e.g., RabbitMQ, Kafka) to handle asynchronous processing and distribute crawling tasks across multiple instances.
+   - Decouples the crawling requests from the processing logic, improving scalability and fault-tolerance.
+   - Queues incoming crawling requests, and worker instances pick up tasks from the queue and process them asynchronously.
+   - Allows for easy scaling by adding more worker instances as the workload increases.
+
+6. Error Handling and Logging:
+   - Implements appropriate error handling mechanisms throughout the application, handling exceptions, and returning meaningful error responses to the client.
+   - Utilizes logging libraries like Winston or Bunyan to log important events and errors, facilitating troubleshooting and monitoring of the system.
+
+7. Scalability and Performance:
+   - Uses techniques like parallel processing, distributed architecture, and caching to support high request volumes and heavy requests with deep crawling.
+   - Implements caching mechanisms to reduce redundant crawling of the same URLs.
+   - Distributes the spider solution across multiple instances or servers, utilizing load balancing and container orchestration technologies to handle scalability requirements.
+
+8. Monitoring and Metrics:
+   - Incorporates monitoring tools like Prometheus or Datadog to collect and visualize performance metrics, such as request latency, error rates, and resource utilization.
+   - Implements health checks and monitors the system's vital components to ensure availability and performance.
